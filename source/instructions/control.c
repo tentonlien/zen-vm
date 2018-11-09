@@ -12,11 +12,11 @@
 
 
 unsigned char sf_value() {
-    return flag_register & 0x80;  // & 1000 0000
+    return (flag_register & 0x80) >> 7;  // & 1000 0000
 }
 
 unsigned char zf_value() {
-    return flag_register & 0x40;  // & 0100 0000
+    return (flag_register & 0x40) >> 6;  // & 0100 0000
 }
 
 void ins_int() {

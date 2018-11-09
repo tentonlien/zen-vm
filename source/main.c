@@ -15,6 +15,7 @@
 
 unsigned int* bytecode_stream;
 unsigned long long bytecode_pointer;
+char zenvm_version[] = "0.0.1";
 
 void header_handler() {
     // Check magic number
@@ -187,7 +188,7 @@ int main(int argc, char* argv[]) {
 
     // Return version info
      else if (strcmp(argv[1], "-version") == 0) {
-        printf("Zen VM v0.0.1\nCopyright 2018 Tenton Lien. All Rights Reserved.\n");
+        printf("Zen VM v%s\nCopyright 2018 Tenton Lien. All Rights Reserved.\n", zenvm_version);
         return 0;
     }
 

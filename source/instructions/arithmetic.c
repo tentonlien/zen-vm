@@ -37,8 +37,8 @@ void ins_cmp() {
     long long _long;
     _long = data_table[dst_operand].value - src_operand_value.value;
 
-    unsigned char sf = flag_register & 0x80;  // & 1000 0000
-    unsigned char zf = flag_register & 0x40;  // & 0100 0000
+    unsigned char sf;  // flag_register & 0x80 & 1000 0000
+    unsigned char zf;  // flag_register & 0x40 & 0100 0000
     
     if (_long == 0) {
         zf = 1;
