@@ -59,5 +59,6 @@ void ins_jg();
 void ins_jl();
 void ins_jge();
 void ins_jle();
+void ins_ret();
 
 #endif //ZENVM_EXECUTEMODULE_H

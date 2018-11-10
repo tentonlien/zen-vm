@@ -3,6 +3,7 @@
 //
 
 #include <stdio.h>
+#include <stdlib.h>
 #include "../../header/instruction_list.h"
 #include "../../header/global_value.h"
 #include "../../header/interrupt_list.h"

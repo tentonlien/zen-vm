@@ -29,5 +29,6 @@ unsigned char flag_register;
 unsigned short stack_pointer;
 unsigned long long base_pointer;
 unsigned int instruction_pointer;
+unsigned int previous_instruction_pointer;
 
 #endif //ZENVM_GLOBALVALUE_H

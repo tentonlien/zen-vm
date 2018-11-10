@@ -33,6 +33,7 @@ void ins_int() {
 void ins_loop() {
     data_table[2].value --;
     if (data_table[2].value > 0) {
+        previous_instruction_pointer = instruction_pointer;
         instruction_pointer = dst_operand_value.value;
     } else {
         instruction_pointer ++;
@@ -41,11 +42,13 @@ void ins_loop() {
 
 
 void ins_jmp() {
+    previous_instruction_pointer = instruction_pointer;
     instruction_pointer = dst_operand_value.value;
 }
 
 void ins_je() {
     if (zf_value() == 1) {
+        previous_instruction_pointer = instruction_pointer;
         instruction_pointer = dst_operand_value.value;
     } else {
         instruction_pointer ++;
@@ -54,6 +57,7 @@ void ins_je() {
 
 void ins_jne() {
     if (zf_value() == 0) {
+        previous_instruction_pointer = instruction_pointer;
         instruction_pointer = dst_operand_value.value;
     } else {
         instruction_pointer ++;
@@ -62,6 +66,7 @@ void ins_jne() {
 
 void ins_jg() {
     if (sf_value() == 0) {
+        previous_instruction_pointer = instruction_pointer;
         instruction_pointer = dst_operand_value.value;
     } else {
         instruction_pointer ++;
@@ -70,6 +75,7 @@ void ins_jg() {
 
 void ins_jl() {
     if (sf_value() == 1) {
+        previous_instruction_pointer = instruction_pointer;
         instruction_pointer = dst_operand_value.value;
     } else {
         instruction_pointer ++;
@@ -78,6 +84,7 @@ void ins_jl() {
 
 void ins_jge() {
     if (zf_value() == 1 || sf_value() == 0) {
+        previous_instruction_pointer = instruction_pointer;
         instruction_pointer = dst_operand_value.value;
     } else {
         instruction_pointer ++;
@@ -86,8 +93,13 @@ void ins_jge() {
 
 void ins_jle() {
     if (zf_value() == 1 || sf_value() == 1) {
+        previous_instruction_pointer = instruction_pointer;
         instruction_pointer = dst_operand_value.value;
     } else {
         instruction_pointer ++;
     }
+}
+
+void ins_ret() {
+    instruction_pointer = previous_instruction_pointer + 1;
 }

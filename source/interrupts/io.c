@@ -37,7 +37,7 @@ void int_10h() {
             break;
 
         default:
-            printf("\nError: Invalid argument \"0x%x\" for INT 10H in AX register.\n", ax -> value);
+            printf("\nError: Invalid argument \"0x%llx\" for INT 10H in AX register.\n", ax -> value);
             exit(0);
     }
 }
@@ -62,7 +62,7 @@ void int_11h() {
             break;
 
         default:
-            printf("\nError: Invalid argument \"0x%x\" for INT 10H in AX register.\n", ax -> value);
+            printf("\nError: Invalid argument \"0x%llx\" for INT 10H in AX register.\n", ax -> value);
             exit(0);
     }
 

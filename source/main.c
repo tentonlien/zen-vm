@@ -147,6 +147,7 @@ int execute() {
         case 0x36: ins_jl(); break;
         case 0x37: ins_jge(); break;
         case 0x38: ins_jle(); break;
+        case 0x39: ins_ret(); break;
         
         default:
             printf("Error: Invalid instruction: 0x%x\n", opcode);
