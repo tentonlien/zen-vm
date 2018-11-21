@@ -19,87 +19,85 @@ unsigned char zf_value() {
     return (flag_register & 0x40) >> 6;  // & 0100 0000
 }
 
-void ins_int() {
-    switch (dst_operand_value.value) {
-        case 0x00: int_00h(); break;
-        case 0x02: int_02h(); break;
-        case 0x10: int_10h(); break;
-        case 0x11: int_11h(); break;
-    }
-    instruction_pointer ++;
+void zen_ins_call() {
 }
 
 
-void ins_loop() {
-    data_table[2].value --;
-    if (data_table[2].value > 0) {
-        previous_instruction_pointer = instruction_pointer;
-        instruction_pointer = dst_operand_value.value;
-    } else {
-        instruction_pointer ++;
+void zen_ins_ret() {
+    //ip = last_ip;
+}
+
+
+void zen_ins_loop() {
+    global_data_seg[2].value --;
+    if (global_data_seg[2].value > 0) {
+        ip = operand_2;
+        //ip = dst_operand_value.value;
     }
 }
 
 
-void ins_jmp() {
-    previous_instruction_pointer = instruction_pointer;
-    instruction_pointer = dst_operand_value.value;
+void zen_ins_jmp() {
+    last_ip = ip;
+    //ip = dst_operand_value.value;
 }
 
-void ins_je() {
+
+void zen_ins_je() {
     if (zf_value() == 1) {
-        previous_instruction_pointer = instruction_pointer;
-        instruction_pointer = dst_operand_value.value;
+        last_ip = ip;
+        //ip = dst_operand_value.value;
     } else {
-        instruction_pointer ++;
+        ip ++;
     }
 }
 
-void ins_jne() {
+
+void zen_ins_jne() {
     if (zf_value() == 0) {
-        previous_instruction_pointer = instruction_pointer;
-        instruction_pointer = dst_operand_value.value;
+        last_ip = ip;
+        //ip = dst_operand_value.value;
     } else {
-        instruction_pointer ++;
+        ip ++;
     }
 }
 
-void ins_jg() {
+
+void zen_ins_jg() {
     if (sf_value() == 0) {
-        previous_instruction_pointer = instruction_pointer;
-        instruction_pointer = dst_operand_value.value;
+        last_ip = ip;
+        //ip = dst_operand_value.value;
     } else {
-        instruction_pointer ++;
+        ip ++;
     }
 }
 
-void ins_jl() {
+
+void zen_ins_jl() {
     if (sf_value() == 1) {
-        previous_instruction_pointer = instruction_pointer;
-        instruction_pointer = dst_operand_value.value;
+        last_ip = ip;
+        //ip = dst_operand_value.value;
     } else {
-        instruction_pointer ++;
+        ip ++;
     }
 }
 
-void ins_jge() {
+
+void zen_ins_jge() {
     if (zf_value() == 1 || sf_value() == 0) {
-        previous_instruction_pointer = instruction_pointer;
-        instruction_pointer = dst_operand_value.value;
+        last_ip = ip;
+        //ip = dst_operand_value.value;
     } else {
-        instruction_pointer ++;
+        ip ++;
     }
 }
 
-void ins_jle() {
+
+void zen_ins_jle() {
     if (zf_value() == 1 || sf_value() == 1) {
-        previous_instruction_pointer = instruction_pointer;
-        instruction_pointer = dst_operand_value.value;
+        last_ip = ip;
+        //ip = dst_operand_value.value;
     } else {
-        instruction_pointer ++;
+        ip ++;
     }
-}
-
-void ins_ret() {
-    instruction_pointer = previous_instruction_pointer + 1;
 }

@@ -7,19 +7,16 @@
 #include "../../header/instruction_list.h"
 #include "../../header/global_value.h"
 
-void ins_and() {
-    data_table[dst_operand].value = data_table[dst_operand].value & src_operand_value.value;
-    instruction_pointer ++;
+void zen_ins_and() {
+    //global_data_seg[dst_operand].value = global_data_seg[dst_operand].value & src_operand_value.value;
 }
 
 
-void ins_or() {
-    data_table[dst_operand].value = data_table[dst_operand].value | src_operand_value.value;
-    instruction_pointer ++;
+void zen_ins_or() {
+    //global_data_seg[dst_operand].value = global_data_seg[dst_operand].value | src_operand_value.value;
 }
 
 
-void ins_not() {
-    data_table[dst_operand].value = !data_table[dst_operand].value;
-    instruction_pointer ++;
+void zen_ins_not() {
+    //global_data_seg[dst_operand].value = !global_data_seg[dst_operand].value;
 }

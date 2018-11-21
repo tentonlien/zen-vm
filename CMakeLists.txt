@@ -11,9 +11,11 @@ add_executable(
     source/main.c
     source/instructions/transfer.c
     source/instructions/arithmetic.c
-    source/instructions/control.c
     source/instructions/logic.c
-    source/interrupts/system.c
-    source/interrupts/io.c
-    header/interrupt_list.h
+    source/instructions/control.c
+    source/instructions/prog.c
+    source/instructions/sys.c
+    source/instructions/cons.c
+    source/instructions/file.c
+    source/instructions/net.c
 )

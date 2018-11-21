@@ -5,60 +5,52 @@
 #ifndef ZENVM_EXECUTEMODULE_H
 #define ZENVM_EXECUTEMODULE_H
 
-/*
-struct instruction {
-    unsigned int opcode;
-    unsigned int addressing;
-    unsigned long long dst_operand;
-    unsigned long long src_operand;
-};
-*/
-//unsigned char opcode;
-//unsigned char addressing;
-unsigned long long dst_operand;
-struct data_unit dst_operand_value;
-unsigned long long src_operand;
-struct data_unit src_operand_value;
-
-
 // Transfer Instructions
-void ins_mov();
-void ins_xchg();
-void ins_push();
-void ins_pop();
+void zen_ins_mov();
+void zen_ins_glob();
+void zen_ins_xchg();
+void zen_ins_push();
+void zen_ins_pop();
 
 // Arithmetic Instructions
-void ins_add();
-void ins_inc();
-void ins_sub();
-void ins_dec();
-void ins_cmp();
-void ins_mul();
-void ins_div();
-void ins_sqrt();
+void zen_ins_add();
+void zen_ins_inc();
+void zen_ins_sub();
+void zen_ins_dec();
+void zen_ins_cmp();
+void zen_ins_mul();
+void zen_ins_div();
+void zen_ins_sqrt();
 
 // Logic Instructions
-void ins_and();
-void ins_or();
-void ins_not();
-void ins_xor();
-void ins_shl();
-void ins_shr();
-void ins_sal();
-void ins_sar();
-void ins_rol();
-void ins_ror();
+void zen_ins_and();
+void zen_ins_or();
+void zen_ins_not();
+void zen_ins_xor();
+void zen_ins_shl();
+void zen_ins_shr();
+void zen_ins_sal();
+void zen_ins_sar();
+void zen_ins_rol();
+void zen_ins_ror();
 
 // Control Instructions
-void ins_int();
-void ins_loop();
-void ins_jmp();
-void ins_je();
-void ins_jne();
-void ins_jg();
-void ins_jl();
-void ins_jge();
-void ins_jle();
-void ins_ret();
+void zen_ins_call();
+void zen_ins_ret();
+void zen_ins_loop();
+void zen_ins_jmp();
+void zen_ins_je();
+void zen_ins_jne();
+void zen_ins_jg();
+void zen_ins_jl();
+void zen_ins_jge();
+void zen_ins_jle();
+
+void zen_ins_prog();
+void zen_ins_sys();
+void zen_ins_cons();
+void zen_ins_file();
+void zen_ins_net();
+
 
 #endif //ZENVM_EXECUTEMODULE_H

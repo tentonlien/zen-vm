@@ -6,29 +6,35 @@
 #define ZENVM_GLOBALVALUE_H
 
 struct data_unit {
-    long long type;
+    unsigned int type;
+    unsigned int length;
     unsigned long long value;
 };
 
-unsigned short stack_size;
+struct subroutine {
+    struct data_unit* data_seg;
+    unsigned int* ins_seg;
+};
 
-unsigned int* instruction_table;
+int execute(struct subroutine);
+
+unsigned int stack_size;
+
 struct data_unit* stack_table;
-struct data_unit* data_table;
+struct data_unit* global_data_seg;
+struct subroutine* subroutines;
 
+struct data_unit* local_data_seg;
 
-// Registers
-struct data_unit* ax;
-struct data_unit* bx;
-struct data_unit* cx;
-struct data_unit* dx;
-struct data_unit* di;
-struct data_unit* si;
 
 unsigned char flag_register;
 unsigned short stack_pointer;
 unsigned long long base_pointer;
-unsigned int instruction_pointer;
-unsigned int previous_instruction_pointer;
+unsigned int ip;
+unsigned int last_ip;
+
+unsigned long long operand_1;
+unsigned long long operand_2;
+unsigned long long operand_3;
 
 #endif //ZENVM_GLOBALVALUE_H

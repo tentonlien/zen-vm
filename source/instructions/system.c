@@ -6,12 +6,13 @@
 #include "../../header/instruction_list.h"
 #include "../../header/global_value.h"
 #include "../../header/interrupt_list.h"
-
+/*
 void ins_int() {
     switch (destination_operand) {
         case 0x00: int_01h(); break;
     }
 }
+*/
 
 /*
 int ins_print()
