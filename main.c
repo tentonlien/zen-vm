@@ -1,5 +1,4 @@
 /* ZenVM v0.1
- * Last Modified: 10/5/2018
  * Bytecode Interpreter of Zen Programming Language
  * Zenlang: An interpreted language created at 8:28 PM, 4/26/2018.
  * Copyright Tenton Lien. All Rights Reserved.
@@ -9,8 +8,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include "../header/global_value.h"
-#include "../header/instruction_list.h"
+#include "zenvm.h"
+#include "instructions.h"
 
 #define magic_number 0x214e455a
 #define bytecode_version 1
@@ -19,26 +18,26 @@ unsigned int* bytecode_stream;
 unsigned long long bytecode_pointer;
 
 struct data_unit* create_data_seg(struct data_unit* data_seg) {
-    // Allocate memory for data segment
+    // allocate memory for data segment
     data_seg = malloc((bytecode_stream[bytecode_pointer]) * 16);
     bytecode_pointer ++;
     unsigned int constant_amount = bytecode_stream[bytecode_pointer];
     bytecode_pointer ++;
 
-    // Write Constant into global data segment
+    // write Constant into global data segment
     for (int i = 0; i < constant_amount; i ++) {
         unsigned int constant_type = bytecode_stream[bytecode_pointer];
         data_seg[i].type = constant_type;
         bytecode_pointer ++;
 
-        // Literal variables
+        // literal variables: 0 -> int8; 1 -> float8
         if (constant_type < 2) {
             unsigned long long* constant_value = (unsigned long long*)(bytecode_stream + bytecode_pointer);
             data_seg[i].value = *constant_value;
             bytecode_pointer += 2;
         }
 
-        // Reference variables
+        // reference variables: 2 -> char[]; 3 -> short[]; 4 -> int[]; 5 -> long[]; 6 -> float[]; 7 -> double[]
         else {
             unsigned int array_size = bytecode_stream[bytecode_pointer];
             data_seg[i].length = array_size;
@@ -69,7 +68,7 @@ struct data_unit* create_data_seg(struct data_unit* data_seg) {
 }
 
 void global_handler() {
-    // Check magic number
+    // check magic number
     if ((bytecode_stream[bytecode_pointer]) == magic_number) {
         bytecode_pointer ++;
 
@@ -78,7 +77,7 @@ void global_handler() {
         exit(0);
     }
 
-    // Check bytecode version
+    // check bytecode version
     if (bytecode_stream[bytecode_pointer] != bytecode_version) {
         printf("Error: Unsupported bytecode version. ZenVM Version %d is required.\n", bytecode_stream[bytecode_pointer]);
         exit(0);
@@ -86,14 +85,16 @@ void global_handler() {
         bytecode_pointer ++;
     }
 
-    // Allocate memory for public stack
+    // allocate memory for public stack
     stack_size = bytecode_stream[bytecode_pointer];
     stack_table = malloc(bytecode_stream[bytecode_pointer] * 8);
+    stack_pointer = 0;
     bytecode_pointer ++;
 
-    // Allocate memory for global data segment
+    // allocate memory for global data segment
     global_data_seg = create_data_seg(global_data_seg);
 }
+
 
 void local_handler() {
     unsigned int subroutine_amount = bytecode_stream[bytecode_pointer];
@@ -103,7 +104,7 @@ void local_handler() {
     for (unsigned int i = 0; i < subroutine_amount; i ++) {
         subroutines[i].data_seg = create_data_seg(subroutines[i].data_seg);
 
-        // Create instruction segment
+        // create instruction segment
         unsigned int ins_amount = bytecode_stream[bytecode_pointer];
         unsigned int* ins_seg = malloc(4 * ins_amount);
         subroutines[i].ins_seg = ins_seg;
@@ -121,7 +122,7 @@ void local_handler() {
 
 int execute(struct subroutine sub) {
     local_data_seg = sub.data_seg;
-    ip = 0;  // Instruction pointer
+    ip = 0;  // instruction pointer
 
     while (1) {
         unsigned char opcode = (sub.ins_seg[ip] & 0xFF000000) >> 24;
@@ -164,6 +165,7 @@ int execute(struct subroutine sub) {
             case 0x42: zen_ins_cons(); break;
             case 0x43: zen_ins_file(); break;
             case 0x44: zen_ins_net(); break;
+            case 0x46: zen_ins_gui(0, 0); break;
         
             default:
                 printf("Error: Invalid instruction: 0x%x\n", opcode);
@@ -176,40 +178,44 @@ int execute(struct subroutine sub) {
 double storeTime = -1;
 
 int timer_start() {
-    struct timespec timeStamp;
-    timespec_get(&timeStamp, TIME_UTC);
-    storeTime = (long long)timeStamp.tv_sec + (double)timeStamp.tv_nsec / 1000000000;
+    #if __linux__
+        struct timespec timeStamp;
+        timespec_get(&timeStamp, TIME_UTC);
+        storeTime = (long long)timeStamp.tv_sec + (double)timeStamp.tv_nsec / 1000000000;
+    #endif
     return 0;
 }
 
 void timer_stop() {
-    struct timespec timeStamp;
-    timespec_get(&timeStamp, TIME_UTC);
-    double currentTime = (long long)timeStamp.tv_sec + (double)timeStamp.tv_nsec / 1000000000;
-    printf("\n");
-    for(int _count = 0; _count < 40; _count ++) {
-        printf("-");
-    }
-    printf("\nProcess exited after %lf seconds\n", currentTime - storeTime);
+    #if __linux__
+        struct timespec timeStamp;
+        timespec_get(&timeStamp, TIME_UTC);
+        double currentTime = (long long)timeStamp.tv_sec + (double)timeStamp.tv_nsec / 1000000000;
+        printf("\n");
+        for(int _count = 0; _count < 40; _count ++) {
+            printf("-");
+        }
+        printf("\nProcess exited after %lf seconds\n", currentTime - storeTime);
+    #endif
 }
 
 
 int main(int argc, char* argv[]) {
     if (argc == 2 && argv[1][0] != '-') {}
-
-    // If retrieving no args
+    
+    // if retrieving no args
     else if (argc == 1) {
-        printf("zvm [-options] *.zef\n");
+        printf("zen [-options] *.zef\n");
         return 0;
     }
 
-    // Return version info
+    // return version info
      else if (strcmp(argv[1], "-version") == 0) {
         printf("Zen VM version %d\nCopyright 2018 Tenton Lien. All Rights Reserved.\n", bytecode_version);
         return 0;
     }
 
-    // Calculate the executing time
+    // calculate the executing time
     else if (argc == 3 && strcmp(argv[1], "-t") == 0) {
         argv[1] = argv[2];
         timer_start();
@@ -223,12 +229,12 @@ int main(int argc, char* argv[]) {
     FILE *fp;
     long long bytecode_length;
 
-    if ((fp = fopen(argv[1],"rb")) == NULL) {
+    if ((fp = fopen(argv[1], "rb")) == NULL) {
         printf("Error: Load bytecode file failed...\n");
         return 0;
 
     } else {
-        // Load the bytecode into bytecode_stream
+        // load the bytecode into bytecode_stream
         fseek(fp,0,SEEK_END);
         bytecode_length = ftell(fp);
         bytecode_stream = malloc(bytecode_length);
@@ -237,7 +243,7 @@ int main(int argc, char* argv[]) {
         fclose(fp);
     }
 
-    global_handler();  // Set global parameters
+    global_handler();  // set global parameters
     local_handler();
     free(bytecode_stream);
     return 0;

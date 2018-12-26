@@ -5,8 +5,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include "../../header/instruction_list.h"
-#include "../../header/global_value.h"
+#include "../zenvm.h"
+#include "../instructions.h"
 
 void sys_time() {
     time_t current_time = time(NULL);

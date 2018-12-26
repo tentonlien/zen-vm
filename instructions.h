@@ -51,6 +51,7 @@ void zen_ins_sys();
 void zen_ins_cons();
 void zen_ins_file();
 void zen_ins_net();
+void zen_ins_gui();
 
 
 #endif //ZENVM_EXECUTEMODULE_H

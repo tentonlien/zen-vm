@@ -2,8 +2,8 @@
 // Created by tentonlien on 5/25/18.
 //
 
-#ifndef ZENVM_GLOBALVALUE_H
-#define ZENVM_GLOBALVALUE_H
+#ifndef ZENVM_H
+#define ZENVM_H
 
 struct data_unit {
     unsigned int type;
@@ -28,7 +28,7 @@ struct data_unit* local_data_seg;
 
 
 unsigned char flag_register;
-unsigned short stack_pointer;
+unsigned int stack_pointer;
 unsigned long long base_pointer;
 unsigned int ip;
 unsigned int last_ip;
@@ -37,4 +37,4 @@ unsigned long long operand_1;
 unsigned long long operand_2;
 unsigned long long operand_3;
 
-#endif //ZENVM_GLOBALVALUE_H
+#endif //ZENVM_H

@@ -3,9 +3,8 @@
 //
 
 #include <stdio.h>
-#include "../../header/instruction_list.h"
-#include "../../header/global_value.h"
-#include "../../header/interrupt_list.h"
+#include "../zenvm.h"
+#include "../instructions.h"
 
 // All the control instructions only allow immediate as dst_operand
 

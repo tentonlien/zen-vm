@@ -3,9 +3,9 @@
 //
 
 #include <stdio.h>
-#include "../../header/instruction_list.h"
-#include "../../header/global_value.h"
-#include "../../header/interrupt_list.h"
+#include "instruction_list.h"
+#include "../zenvm.h"
+#include "../instructions.h"
 /*
 void ins_int() {
     switch (destination_operand) {

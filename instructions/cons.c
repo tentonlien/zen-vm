@@ -4,10 +4,10 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "../../header/instruction_list.h"
-#include "../../header/global_value.h"
+#include "../zenvm.h"
+#include "../instructions.h"
 
-// INT 10H : Input
+// input
 void cons_input() {
     
     union {
@@ -44,7 +44,8 @@ void cons_input() {
     
 }
 
-// INT 11H : Output
+
+// output
 void cons_output() {
     switch(operand_2) {
         case 0x00:  // int
@@ -52,7 +53,7 @@ void cons_output() {
             break;
 
         case 0x01:  // float
-            printf("%lf", local_data_seg[operand_3].value);
+            printf("%lf", (double)(local_data_seg[operand_3].value));
             break;
 
         case 0x02:  // char
@@ -75,19 +76,20 @@ void cons_output() {
             printf("\nError: Invalid argument \"0x%llx\" for INT 10H in AX register.\n", operand_2);
             exit(0);
     }
+    
 }
 
 
-// INT 12H : Clear screen
+// clear screen
 void cons_clear() {
-    
+    system("clear");
 }
 
 void zen_ins_cons() {
     switch(operand_1) {
         case 0x00: cons_input(); break;
         case 0x01: cons_output(); break;
-        case 0x02: break;
+        case 0x02: cons_clear(); break;
         default: break;
     }
 }

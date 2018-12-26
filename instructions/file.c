@@ -4,8 +4,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "../../header/instruction_list.h"
-#include "../../header/global_value.h"
+#include "../zenvm.h"
+#include "../instructions.h"
 
 void zen_ins_file() {
 

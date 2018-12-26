@@ -4,8 +4,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "../../header/instruction_list.h"
-#include "../../header/global_value.h"
+#include "../zenvm.h"
+#include "../instructions.h"
 
 extern double timer_stop();
 extern double storeTime;
@@ -17,7 +17,9 @@ void zen_ins_prog() {
         if (storeTime >= 0) {
             timer_stop();
         }
-        exit((int)operand_2);
+        //printf("%ld %d", (operand_2 << 8) + operand_3  , operand_3);
+        
+        exit((int)((operand_2 << 8)+ operand_3));
     }
 
     // Create new process
