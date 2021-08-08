@@ -9,17 +9,17 @@ SET(PLATFORM_SPECIFIC_LIBS "-lpthread")
 
 add_executable(
     zen
-    main.c
-    instructions/transfer.c
-    instructions/arithmetic.c
-    instructions/logic.c
-    instructions/control.c
-    instructions/gui.c
-    instructions/prog.c
-    instructions/sys.c
-    instructions/cons.c
-    instructions/file.c
-    instructions/net.c
+        src/main.c
+        src/instructions/transfer.c
+        src/instructions/arithmetic.c
+        src/instructions/logic.c
+        src/instructions/control.c
+        src/instructions/gui.c
+        src/instructions/prog.c
+        src/instructions/sys.c
+        src/instructions/cons.c
+        src/instructions/file.c
+        src/instructions/net.c
 )
 
 find_package(PkgConfig)
